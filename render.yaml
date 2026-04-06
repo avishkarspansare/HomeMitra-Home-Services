@@ -1,5 +1,5 @@
 services:
-  # ─── Backend: Spring Boot API ────────────────────────────────────────
+  # ─── Backend: Spring Boot API ─────────────────────────────────────────
   - type: web
     name: homemitra-backend
     runtime: java
@@ -12,7 +12,7 @@ services:
       - key: PORT
         value: 8080
       - key: SPRING_DATASOURCE_URL
-        sync: false   # Fill this in Render dashboard after creating DB
+        sync: false   # jdbc:mysql://host:port/db?useSSL=true&requireSSL=true&serverTimezone=UTC
       - key: DB_USERNAME
         sync: false
       - key: DB_PASSWORD
@@ -28,7 +28,10 @@ services:
       - key: MAIL_PASSWORD
         sync: false
       - key: ALLOWED_ORIGINS
-        sync: false   # Set to your frontend Render URL, e.g. https://homemitra-frontend.onrender.com
+        sync: false
+        # ⚠️  Set this to your EXACT frontend URL, e.g.:
+        #     https://homemitra-home-services.onrender.com
+        # Multiple URLs: https://homemitra-home-services.onrender.com,https://www.yourdomain.com
 
   # ─── Frontend: Static Site ────────────────────────────────────────────
   - type: web
@@ -38,7 +41,13 @@ services:
     plan: free
     rootDir: .
     staticPublishPath: .
-    buildCommand: "echo 'No build needed'"
+    # Injects the backend URL at build time — no hardcoding in JS files
+    buildCommand: "sed -i 's|__BACKEND_URL__|'\"$BACKEND_URL\"'|g' frontend/js/env-config.js"
+    envVars:
+      - key: BACKEND_URL
+        sync: false
+        # ⚠️  Set this to your EXACT backend URL, e.g.:
+        #     https://homemitra-backend.onrender.com
     routes:
       - type: rewrite
         source: /*
