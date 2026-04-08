@@ -12,4 +12,4 @@
 //     sed -i "s|__BACKEND_URL__|$BACKEND_URL|g" frontend/js/env-config.js
 // ============================================================
 
-window.API_BASE_URL = '__BACKEND_URL__';
+window.API_BASE_URL = 'https://homemitra-home-services.onrender.com';
