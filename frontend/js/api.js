@@ -4,7 +4,9 @@
 
 // Base URL: set window.API_BASE_URL in env-config.js for production.
 // Falls back to localhost for local dev.
-const API_BASE = (window.API_BASE_URL || 'http://localhost:8080') + '/api';
+//const API_BASE = (window.API_BASE_URL || 'http://localhost:8080') + '/api';
+const API_BASE = (window.API_BASE_URL || 'https://homemitra-home-services.onrender.com') + '/api';
+
 
 // Resolve page prefix depending on where we're served from:
 //  A) /index.html (root)             → pages live at frontend/pages/name.html
